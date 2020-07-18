@@ -35,6 +35,7 @@ function UploadProductPage(props) {
     setPrice(e.currentTarget.value);
   };
   const onContinentsSelectChange = e => {
+    console.log("conti:", e.currentTarget.value);
     setContinentValue(e.currentTarget.value);
   };
   const updateImages = newImages => {
@@ -95,7 +96,7 @@ function UploadProductPage(props) {
         <br />
         <select onChange={onContinentsSelectChange} value={ContinentValue}>
           {Continents.map(item => (
-            <option key={item.key} value={item.value}>
+            <option key={item.key} value={item.key}>
               {item.value}
             </option>
           ))}
