@@ -3,7 +3,7 @@ import LeftMenu from "./Sections/LeftMenu";
 import RightMenu from "./Sections/RightMenu";
 import { Button, Drawer } from "antd";
 import "./Sections/NavBar.css";
-import { AlignRightOutlined } from "@ant-design/icons";
+import { AlignRightOutlined, SendOutlined } from "@ant-design/icons";
 
 function NavBar() {
   const [visible, setVisible] = useState(false);
@@ -21,7 +21,9 @@ function NavBar() {
       style={{ position: "fixed", zIndex: 5, width: "100%" }}
     >
       <div className="menu__logo">
-        <a href="/">ZOE</a>
+        <a href="/" style={{ fontWeight: "bold" }}>
+          <SendOutlined /> Zoe
+        </a>
       </div>
       <div className="menu__container">
         <div className="menu_left">

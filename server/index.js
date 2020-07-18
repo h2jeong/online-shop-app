@@ -25,6 +25,7 @@ app.use(cors());
 app.use("/uploads", express.static("uploads"));
 
 app.use("/api/users", require("./routes/users"));
+app.use("/api/product", require("./routes/product"));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

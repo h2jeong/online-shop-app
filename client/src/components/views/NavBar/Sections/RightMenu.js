@@ -7,7 +7,8 @@ import { Menu, message } from "antd";
 import {
   UserAddOutlined,
   LogoutOutlined,
-  PoweroffOutlined
+  PoweroffOutlined,
+  UploadOutlined
 } from "@ant-design/icons";
 
 function RightMenu(props) {
@@ -40,6 +41,9 @@ function RightMenu(props) {
   } else {
     return (
       <Menu mode={props.mode}>
+        <Menu.Item key="upload" icon={<UploadOutlined />}>
+          <a href="/product/upload">Upload</a>
+        </Menu.Item>
         <Menu.Item key="logout" icon={<LogoutOutlined />}>
           <span onClick={onHandleLogout}>Log out</span>
         </Menu.Item>

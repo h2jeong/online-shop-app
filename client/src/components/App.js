@@ -6,6 +6,7 @@ import RegisterPage from "./views/RegisterPage/RegisterPage";
 import NavBar from "./views/NavBar/NavBar";
 import FooterComponent from "./views/Footer/Footer";
 import auth from "../hoc/auth";
+import UploadProductPage from "./views/UploadProductPage/UploadProductPage";
 
 function App() {
   return (
@@ -18,6 +19,10 @@ function App() {
             <Route exact path="/" component={auth(LandingPage, null)} />
             <Route path="/login" component={auth(LoginPage, false)} />
             <Route path="/register" component={auth(RegisterPage, false)} />
+            <Route
+              path="/product/upload"
+              component={auth(UploadProductPage, true)}
+            />
           </Switch>
         </div>
 
