@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Radio, Row, Col, Card } from "antd";
+import { Row, Col, Card } from "antd";
 import Search from "antd/lib/input/Search";
 import { RocketOutlined } from "@ant-design/icons";
 import axios from "axios";
 import Meta from "antd/lib/card/Meta";
 import ImageSlider from "../../utils/ImageSlider";
 import CheckBoxGroup from "./Sections/CheckBoxGroup";
+import { continents, price } from "./Sections/data";
+import RadioBox from "./Sections/RadioBox";
 
 function LandingPage() {
   const [Products, setProducts] = useState([]);
@@ -97,13 +99,16 @@ function LandingPage() {
         <Col lg={12} xs={24}>
           {/* CheckBox */}
           <CheckBoxGroup
+            list={continents}
             handleFilters={filters => handleFilters(filters, "continents")}
           />
-          <span>name</span>
         </Col>
         <Col lg={12} xs={24}>
           {/* RadioBox */}
-          <Radio value> name </Radio>
+          <RadioBox
+            list={price}
+            handleFilters={filters => handleFilters(filters, "price")}
+          />
         </Col>
       </Row>
 
