@@ -74,11 +74,21 @@ function LandingPage() {
     setSkip(0);
   };
 
+  const handlePrice = value => {
+    const data = price;
+    let array = data.filter(item => item._id === value)[0].array;
+    console.log(array);
+    return array;
+  };
+
   const handleFilters = (filters, category) => {
     console.log(category, filters);
     const newFilters = { ...Filters };
     newFilters[category] = filters;
+
     if (category === "price") {
+      let priceValues = handlePrice(filters);
+      newFilters[category] = priceValues;
     }
 
     showFilteredResults(newFilters);
