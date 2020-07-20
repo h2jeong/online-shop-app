@@ -3,6 +3,7 @@ import { Form, Input, Tooltip, Button, message } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../_actions/user_action";
+import moment from "moment";
 
 const formItemLayout = {
   labelCol: {
@@ -32,7 +33,9 @@ function RegisterPage(props) {
   const [form] = Form.useForm();
 
   const onFinish = values => {
-    // console.log("Received values of form: ", values);
+    values.image = `http://gravatar.com/avatar/${moment().unix()}?d=identicon`;
+    console.log("Received values of form: ", values);
+
     dispatch(registerUser(values)).then(res => {
       if (res.payload.success) {
         message.success("Register succeed");

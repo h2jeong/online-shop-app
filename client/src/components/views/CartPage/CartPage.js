@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Result, Empty } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+// import { getCartItems } from "../../../_actions/user_action";
 
-function CartPage() {
+function CartPage(props) {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+  console.log(user);
+  useEffect(() => {}, []);
+
   return (
     <div style={{ width: "85%", margin: "3rem auto" }}>
       <h1>My Cart</h1>
@@ -18,6 +25,8 @@ function CartPage() {
               </tr>
             </thead>
             <tbody>
+              {/* {user.auth &&
+                user.auth.user.cart.map((cart, idx) => ( */}
               <tr>
                 <td>
                   <img style={{ width: "70px" }} alt="product" src />
@@ -28,6 +37,7 @@ function CartPage() {
                   <button onClick>Remove </button>{" "}
                 </td>
               </tr>
+              {/* ))} */}
             </tbody>
           </table>
         </div>

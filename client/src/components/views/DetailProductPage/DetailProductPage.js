@@ -3,8 +3,11 @@ import { Row, Col, message } from "antd";
 import axios from "axios";
 import ProductImage from "./Sections/ProductImage";
 import ProductInfo from "./Sections/ProductInfo";
+import { addToCart } from "../../../_actions/user_action";
+import { useDispatch } from "react-redux";
 
 function DetailProductPage(props) {
+  const dispatch = useDispatch();
   const [Product, setProduct] = useState([]);
   useEffect(() => {
     let productId = props.match.params.productId;
@@ -21,6 +24,12 @@ function DetailProductPage(props) {
       });
   }, []);
 
+  const addToCartHandler = productId => {
+    dispatch(addToCart(productId)).then(res => {
+      console.log(res.payload);
+    });
+  };
+
   return (
     <div className="postPage" style={{ width: "100%", padding: "3rem 4rem" }}>
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -34,7 +43,7 @@ function DetailProductPage(props) {
         </Col>
         <Col lg={12} xs={24}>
           {/* productInfo */}
-          <ProductInfo detail={Product} />
+          <ProductInfo detail={Product} addToCart={addToCartHandler} />
         </Col>
       </Row>
     </div>

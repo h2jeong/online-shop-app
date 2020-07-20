@@ -103,6 +103,9 @@ router.get("/products_by_id", (req, res) => {
   let productIds = req.query.id;
   console.log(productIds);
   if (type === "array") {
+    let ids = req.query.id.split(",");
+    productIds = [];
+    productIds = ids.map(item => item);
   }
 
   // we need to find the product information that belong to product id
@@ -110,6 +113,7 @@ router.get("/products_by_id", (req, res) => {
     .populate("writer")
     .exec((err, product) => {
       if (err) return res.status(400).json({ success: false, err });
+      console.log(product);
       res.status(200).json({ success: true, product });
     });
 });

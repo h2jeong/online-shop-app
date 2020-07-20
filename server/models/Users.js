@@ -9,7 +9,10 @@ const userSchema = mongoose.Schema({
   email: { type: String, unique: true },
   password: { type: String, minLenght: 5 },
   role: { type: Number, default: 0 },
-  token: { type: String }
+  token: { type: String },
+  image: String,
+  cart: { type: Array, default: [] },
+  history: { type: Array, default: [] }
 });
 
 userSchema.pre("save", function(next) {
