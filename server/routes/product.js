@@ -51,8 +51,8 @@ router.post("/getProducts", (req, res) => {
   let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
   let limit = req.body.limit ? parseInt(req.body.limit) : 100;
   let skip = req.body.skip ? parseInt(req.body.skip) : 0;
+  let term = req.body.serchTerm;
   let findArgs = {};
-
   // console.log(req.body.filters);
 
   for (let key in req.body.filters) {
@@ -67,17 +67,50 @@ router.post("/getProducts", (req, res) => {
       }
     }
   }
-  // console.log(findArgs);
-  Product.find(findArgs)
+  console.log(findArgs);
+  if (term) {
+    Product.find(findArgs)
+      .find({ $text: { $search: term } })
+      .populate("writer")
+      .sort([[sortBy, order]])
+      .skip(skip)
+      .limit(limit)
+      .exec((err, products) => {
+        if (err) return res.status(400).json({ success: false, err });
+        return res
+          .status(200)
+          .json({ success: true, products, postSize: products.length });
+      });
+  } else {
+    Product.find(findArgs)
+      .populate("writer")
+      .sort([[sortBy, order]])
+      .skip(skip)
+      .limit(limit)
+      .exec((err, products) => {
+        if (err) return res.status(400).json({ success: false, err });
+        return res
+          .status(200)
+          .json({ success: true, products, postSize: products.length });
+      });
+  }
+});
+
+// ?id=${productId}&type=single
+// type=array id=12321323,12323214,12340909
+router.get("/products_by_id", (req, res) => {
+  let type = req.query.type;
+  let productIds = req.query.id;
+  console.log(productIds);
+  if (type === "array") {
+  }
+
+  // we need to find the product information that belong to product id
+  Product.find({ _id: { $in: productIds } })
     .populate("writer")
-    .sort([[sortBy, order]])
-    .skip(skip)
-    .limit(limit)
-    .exec((err, products) => {
+    .exec((err, product) => {
       if (err) return res.status(400).json({ success: false, err });
-      return res
-        .status(200)
-        .json({ success: true, products, postSize: products.length });
+      res.status(200).json({ success: true, product });
     });
 });
 

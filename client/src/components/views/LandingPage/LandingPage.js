@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Card } from "antd";
-import Search from "antd/lib/input/Search";
 import { RocketOutlined } from "@ant-design/icons";
 import axios from "axios";
 import Meta from "antd/lib/card/Meta";
@@ -8,6 +7,7 @@ import ImageSlider from "../../utils/ImageSlider";
 import CheckBoxGroup from "./Sections/CheckBoxGroup";
 import { continents, price } from "./Sections/data";
 import RadioBox from "./Sections/RadioBox";
+import SearchFeature from "./Sections/SearchFeature";
 
 function LandingPage() {
   const [Products, setProducts] = useState([]);
@@ -15,7 +15,7 @@ function LandingPage() {
   const [Limit, setLimit] = useState(6);
   const [PostSize, setPostSize] = useState(0);
   const [Filters, setFilters] = useState({ continents: [], price: [] });
-
+  const [SearchTerms, setSearchTerms] = useState("");
   useEffect(() => {
     const variables = {
       skip: Skip,
@@ -55,7 +55,14 @@ function LandingPage() {
   const renderCards = Products.map((product, idx) => {
     return (
       <Col key={idx} lg={6} md={8} xs={24}>
-        <Card hoverable={true} cover={<ImageSlider images={product.images} />}>
+        <Card
+          hoverable={true}
+          cover={
+            <a href={`/product/${product._id}`}>
+              <ImageSlider images={product.images} />
+            </a>
+          }
+        >
           <Meta title={product.title} description={`$${product.price}`} />
         </Card>
       </Col>
@@ -95,6 +102,20 @@ function LandingPage() {
     setFilters(newFilters);
   };
 
+  const upadateSearchTerms = term => {
+    setSearchTerms(term);
+    console.log(term);
+    const variables = {
+      skip: 0,
+      limit: Limit,
+      filter: Filters,
+      serchTerm: term
+    };
+
+    getProducts(variables);
+    setSkip(0);
+  };
+
   return (
     <div style={{ width: "75%", margin: "3rem auto" }}>
       <div style={{ textAlign: "center" }}>
@@ -104,7 +125,6 @@ function LandingPage() {
       </div>
 
       {/* Filter */}
-
       <Row gutter={[16, 16]}>
         <Col lg={12} xs={24}>
           {/* CheckBox */}
@@ -123,7 +143,6 @@ function LandingPage() {
       </Row>
 
       {/* Search */}
-
       <div
         style={{
           display: "flex",
@@ -131,14 +150,7 @@ function LandingPage() {
           margin: "1rem auto"
         }}
       >
-        <div>
-          <Search
-            placeholder="input search text"
-            onChange
-            style={{ width: 200 }}
-            value
-          />
-        </div>
+        <SearchFeature refreshFunction={upadateSearchTerms} />
       </div>
 
       {/* Cards */}
