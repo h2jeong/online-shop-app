@@ -4,10 +4,9 @@ import { useEffect } from "react";
 import { authUser } from "../_actions/user_action";
 
 export default function(WrappedComponent, option, adminRoute = null) {
-  const dispatch = useDispatch();
-
   function AuthenticationCheck(props) {
-    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
+    let user = useSelector(state => state.user);
     // option - null : 아무나 출입 가능, true : 로그인 유저만, false: 로그인 유저 불가능
     // adminRoute - null, true, false
     // 가져온 상태를 가지고 분기 처리를 해준다.

@@ -94,7 +94,7 @@ router.post("/logout", auth, (req, res) => {
 
 // Ref: http://mongodb.github.io/node-mongodb-native/3.0/api/Collection.html#findOneAndUpdate
 
-router.post("/addToCart", auth, (req, res) => {
+router.get("/addToCart", auth, (req, res) => {
   User.findById({ _id: req.user._id }, (err, userInfo) => {
     let duplicate = false;
     // console.log(userInfo.cart, req.query.productId);
@@ -131,6 +131,19 @@ router.post("/addToCart", auth, (req, res) => {
     }
     // console.log(userInfo.cart);
   });
+});
+
+router.get("/removeItem", auth, (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $pull: { cart: { id: req.query.productId } } },
+    { new: true },
+    (err, userInfo) => {
+      if (err) return res.json({ success: false, err });
+      res.status(200).json(userInfo.cart);
+      console.log(userInfo.cart);
+    }
+  );
 });
 
 module.exports = router;

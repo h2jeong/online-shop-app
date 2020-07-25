@@ -67,7 +67,7 @@ router.post("/getProducts", (req, res) => {
       }
     }
   }
-  console.log(findArgs);
+  // console.log(findArgs);
   if (term) {
     Product.find(findArgs)
       .find({ $text: { $search: term } })
@@ -101,7 +101,7 @@ router.post("/getProducts", (req, res) => {
 router.get("/products_by_id", (req, res) => {
   let type = req.query.type;
   let productIds = req.query.id;
-  console.log(productIds);
+  // console.log(productIds);
   if (type === "array") {
     let ids = req.query.id.split(",");
     productIds = [];
@@ -113,8 +113,8 @@ router.get("/products_by_id", (req, res) => {
     .populate("writer")
     .exec((err, product) => {
       if (err) return res.status(400).json({ success: false, err });
-      console.log(product);
-      res.status(200).json({ success: true, product });
+      // console.log(product);
+      res.status(200).json(product);
     });
 });
 

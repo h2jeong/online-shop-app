@@ -4,7 +4,8 @@ import {
   LOGOUT_USER,
   AUTH_USER,
   ADD_TO_CART_USER,
-  GET_CART_ITEMS_USER
+  GET_CART_ITEMS_USER,
+  REMOVE_ITEM_USER
 } from "./types";
 import axios from "axios";
 import { USER_SERVER } from "../components/Config.js";
@@ -39,12 +40,22 @@ export function authUser() {
 
 export function addToCart(id) {
   const request = axios
-    .post(`${USER_SERVER}/addToCart?productId=${id}`)
+    .get(`${USER_SERVER}/addToCart?productId=${id}`)
     .then(res => {
       return res.data;
     });
 
   return { type: ADD_TO_CART_USER, payload: request };
+}
+
+export function removeItem(id) {
+  const request = axios
+    .get(`${USER_SERVER}/removeItem?productId=${id}`)
+    .then(res => {
+      return res.data;
+    });
+
+  return { type: REMOVE_ITEM_USER, payload: request };
 }
 
 export function getCartItems(cartItems, userCart) {
@@ -55,9 +66,9 @@ export function getCartItems(cartItems, userCart) {
       // Make cartDetail inside redux store
       // we need to add quantity data to product information that come from product collection
       userCart.forEach(cartItem => {
-        res.data.product.forEach((productDetail, idx) => {
+        res.data.forEach((productDetail, idx) => {
           if (cartItem.id === productDetail._id) {
-            res.data.product[idx].quantity = cartItem.quantity;
+            res.data[idx].quantity = cartItem.quantity;
           }
         });
       });

@@ -16,6 +16,7 @@ function LandingPage() {
   const [PostSize, setPostSize] = useState(0);
   const [Filters, setFilters] = useState({ continents: [], price: [] });
   const [SearchTerms, setSearchTerms] = useState("");
+
   useEffect(() => {
     const variables = {
       skip: Skip,
