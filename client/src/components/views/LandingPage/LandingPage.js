@@ -34,7 +34,6 @@ function LandingPage() {
           setProducts(res.data.products);
         }
         setPostSize(res.data.postSize);
-        console.log(Products);
       } else {
         alert("Failed to fetch all projcets");
       }

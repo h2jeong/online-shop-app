@@ -1,11 +1,17 @@
 import React from "react";
 import { Descriptions, Button } from "antd";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../../_actions/user_action";
 
 function ProductInfo(props) {
+  const dispatch = useDispatch();
   // const [Product, setProduct] = useState({})
   // useEffect(() => {setProduct(props.detail)}, [props.detail])
+
   const addToCartHandler = () => {
-    props.addToCart(props.detail._id);
+    dispatch(addToCart(props.detail._id)).then(res => {
+      console.log(res.payload);
+    });
   };
 
   return (

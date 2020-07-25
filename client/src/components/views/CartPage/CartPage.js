@@ -1,13 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Result, Empty } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-// import { getCartItems } from "../../../_actions/user_action";
+import { useDispatch } from "react-redux";
+import { getCartItems } from "../../../_actions/user_action";
 
 function CartPage(props) {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
-  console.log(user);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // state의 cart를 불러와서
+    // db의 product 정보를 매치해서 업데이트 해준다.
+    let cartItems = [];
+    if (props.user.auth && props.user.auth.user.cart) {
+      if (props.user.auth.user.cart.length > 0) {
+        cartItems = props.user.auth.user.cart.map(cart => cart.id);
+        dispatch(getCartItems(cartItems, props.user.auth.user.cart));
+      }
+    }
+  }, [props.user.auth, dispatch]);
 
   return (
     <div style={{ width: "85%", margin: "3rem auto" }}>
@@ -25,19 +33,23 @@ function CartPage(props) {
               </tr>
             </thead>
             <tbody>
-              {/* {user.auth &&
-                user.auth.user.cart.map((cart, idx) => ( */}
-              <tr>
-                <td>
-                  <img style={{ width: "70px" }} alt="product" src />
-                </td>
-                <td>quantity EA</td>
-                <td>$ price </td>
-                <td>
-                  <button onClick>Remove </button>{" "}
-                </td>
-              </tr>
-              {/* ))} */}
+              {props.user.cartDetail &&
+                props.user.cartDetail.product.map((cart, idx) => (
+                  <tr key={idx}>
+                    <td>
+                      <img
+                        style={{ width: "70px" }}
+                        alt="product"
+                        src={`http://localhost:5000/${cart.images[0]}`}
+                      />
+                    </td>
+                    <td>{cart.quantity} EA</td>
+                    <td>$ {cart.price} </td>
+                    <td>
+                      <button>Remove </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

@@ -97,13 +97,13 @@ router.post("/logout", auth, (req, res) => {
 router.post("/addToCart", auth, (req, res) => {
   User.findById({ _id: req.user._id }, (err, userInfo) => {
     let duplicate = false;
-    console.log(userInfo.cart, req.query.productId);
+    // console.log(userInfo.cart, req.query.productId);
     userInfo.cart.forEach(cartInfo => {
       if (cartInfo.id === req.query.productId) {
         duplicate = true;
       }
     });
-
+    // console.log("duplicate:", duplicate);
     if (duplicate) {
       User.findOneAndUpdate(
         { _id: req.user._id, "cart.id": req.query.productId },
@@ -129,6 +129,7 @@ router.post("/addToCart", auth, (req, res) => {
         }
       );
     }
+    // console.log(userInfo.cart);
   });
 });
 

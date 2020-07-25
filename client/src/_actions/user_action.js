@@ -51,12 +51,13 @@ export function getCartItems(cartItems, userCart) {
   const request = axios
     .get(`/api/product/products_by_id?id=${cartItems}&type=array`)
     .then(res => {
-      //Make cartDetail inside redux store
+      // console.log("res.data:", res.data);
+      // Make cartDetail inside redux store
       // we need to add quantity data to product information that come from product collection
       userCart.forEach(cartItem => {
-        res.data.forEach((productDetail, idx) => {
-          if (cartItem.id === productDetail.id) {
-            res.data[idx].quantity = cartItem.quantity;
+        res.data.product.forEach((productDetail, idx) => {
+          if (cartItem.id === productDetail._id) {
+            res.data.product[idx].quantity = cartItem.quantity;
           }
         });
       });
