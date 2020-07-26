@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { User } = require("../models/Users");
 const { auth } = require("../middlewares/auth");
+const { Product } = require("../models/Product");
 
 router.get("/auth", auth, (req, res) => {
   // console.log("auth:", req.body, req.user);
@@ -124,7 +125,7 @@ router.get("/addToCart", auth, (req, res) => {
         },
         { new: true },
         (err, userInfo) => {
-          if (err) return res.json({ succees: false, err });
+          if (err) return res.json({ success: false, err });
           res.status(200).json(userInfo.cart);
         }
       );
@@ -139,9 +140,15 @@ router.get("/removeItem", auth, (req, res) => {
     { $pull: { cart: { id: req.query.productId } } },
     { new: true },
     (err, userInfo) => {
-      if (err) return res.json({ success: false, err });
-      res.status(200).json(userInfo.cart);
-      console.log(userInfo.cart);
+      let cart = userInfo.cart;
+      let cartIds = cart.map(item => item.id);
+
+      Product.find({ _id: { $in: cartIds } })
+        .populate("writer")
+        .exec((err, cartDetail) => {
+          if (err) return res.json({ success: false, err });
+          res.status(200).json({ cartDetail, cart });
+        });
     }
   );
 });

@@ -77,7 +77,6 @@ function LandingPage() {
     };
 
     getProducts(variables);
-
     setSkip(0);
   };
 

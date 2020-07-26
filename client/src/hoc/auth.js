@@ -18,7 +18,7 @@ export default function(WrappedComponent, option, adminRoute = null) {
     useEffect(() => {
       dispatch(authUser())
         .then(res => {
-          // console.log("res.payload:", res.payload);
+          // console.log("res.payload:", res.payload, option);
           // 로그인 전
           if (!res.payload.isAuth) {
             if (option) {
@@ -26,19 +26,19 @@ export default function(WrappedComponent, option, adminRoute = null) {
             }
             // 로그인 후
           } else {
-            if (option) {
-              if (adminRoute && !res.payload.isAdmin) {
+            if (adminRoute && !res.payload.isAdmin) {
+              props.history.push("/");
+            } else {
+              if (option === false) {
                 props.history.push("/");
               }
-            } else if (option === false) {
-              props.history.push("/");
             }
           }
         })
         .catch(err => {
           console.log("auth error:", err);
         });
-    }, [dispatch, props.history, user]);
+    }, [dispatch, props.history]);
 
     return <WrappedComponent {...props} user={user} />;
   }

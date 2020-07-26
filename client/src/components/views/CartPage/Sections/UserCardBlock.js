@@ -2,9 +2,9 @@ import React from "react";
 import { Button } from "antd";
 
 function UserCardBlock(props) {
-  console.log(props);
   const renderItems = () =>
     props.products &&
+    props.products.length > 0 &&
     props.products.map((product, idx) => (
       <tr key={idx}>
         <td>

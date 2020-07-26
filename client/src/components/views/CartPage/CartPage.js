@@ -3,6 +3,7 @@ import { Result, Empty } from "antd";
 import { useDispatch } from "react-redux";
 import { getCartItems, removeItem } from "../../../_actions/user_action";
 import UserCardBlock from "./Sections/UserCardBlock";
+import { withRouter } from "react-router-dom";
 
 function CartPage(props) {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ function CartPage(props) {
   useEffect(() => {
     // state의 cart를 불러와서
     // db의 product 정보를 매치해서 업데이트 해준다.
+    console.log(props.user.auth);
     let cartItems = [];
     if (props.user.auth && props.user.auth.user.cart) {
       if (props.user.auth.user.cart.length > 0) {
@@ -41,7 +43,12 @@ function CartPage(props) {
   };
 
   const onRemove = productId => {
-    dispatch(removeItem(productId));
+    dispatch(removeItem(productId)).then(res => {
+      if (res.payload.cartDetail.length <= 0) {
+      } else {
+        calculatateTotal(res.payload.cartDetail);
+      }
+    });
   };
 
   return (
@@ -74,4 +81,4 @@ function CartPage(props) {
   );
 }
 
-export default CartPage;
+export default withRouter(CartPage);

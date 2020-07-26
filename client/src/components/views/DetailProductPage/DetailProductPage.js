@@ -18,6 +18,7 @@ function DetailProductPage(props) {
       .then(res => {
         if (res.data.success) {
           setProduct(res.data.product[0]);
+          // console.log("Product:", res.data.product[0]);
         } else {
           message.error("Failed to get product by Id");
         }
@@ -25,7 +26,12 @@ function DetailProductPage(props) {
   }, [productId]);
 
   const addToCartHandler = productId => {
-    dispatch(addToCart(productId));
+    if (!props.user.auth.isAuth) {
+      return message.warning("Add to Cart is available after login");
+    }
+    dispatch(addToCart(productId)).then(res =>
+      props.history.push("/user/cart")
+    );
   };
 
   return (

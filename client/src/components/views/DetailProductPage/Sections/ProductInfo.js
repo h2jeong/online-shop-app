@@ -2,11 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Descriptions, Button } from "antd";
 
 function ProductInfo(props) {
-  const [Product, setProduct] = useState({});
-  useEffect(() => {
-    setProduct(props.detail);
-  }, [props.detail]);
-
   const addToCartHandler = () => {
     props.addToCart(props.detail._id);
   };
@@ -14,11 +9,15 @@ function ProductInfo(props) {
   return (
     <div>
       <Descriptions title="Product Info">
-        <Descriptions.Item label="Price">{Product.price}</Descriptions.Item>
-        <Descriptions.Item label="Sold">{Product.sold}</Descriptions.Item>
-        <Descriptions.Item label="Views">{Product.views}</Descriptions.Item>
+        <Descriptions.Item label="Price">
+          {props.detail.price}
+        </Descriptions.Item>
+        <Descriptions.Item label="Sold">{props.detail.sold}</Descriptions.Item>
+        <Descriptions.Item label="Views">
+          {props.detail.views}
+        </Descriptions.Item>
         <Descriptions.Item label="Description">
-          {Product.description}
+          {props.detail.description}
         </Descriptions.Item>
       </Descriptions>
       <br />
