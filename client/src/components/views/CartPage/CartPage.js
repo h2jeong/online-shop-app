@@ -14,16 +14,14 @@ function CartPage(props) {
     // db의 product 정보를 매치해서 업데이트 해준다.
     console.log(props.user.auth);
     let cartItems = [];
-    if (props.user.auth && props.user.auth.user.cart) {
-      if (props.user.auth.user.cart.length > 0) {
-        cartItems = props.user.auth.user.cart.map(cart => cart.id);
-        dispatch(getCartItems(cartItems, props.user.auth.user.cart)).then(
-          res => {
-            if (res.payload.length > 0) {
-              calculatateTotal(res.payload);
-            }
+    if (props.user.auth && props.user.auth.cart) {
+      if (props.user.auth.cart.length > 0) {
+        cartItems = props.user.auth.cart.map(cart => cart.id);
+        dispatch(getCartItems(cartItems, props.user.auth.cart)).then(res => {
+          if (res.payload.length > 0) {
+            calculatateTotal(res.payload);
           }
-        );
+        });
       }
     }
   }, [props.user.auth]);

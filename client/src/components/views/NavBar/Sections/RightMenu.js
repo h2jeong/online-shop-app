@@ -49,7 +49,7 @@ function RightMenu(props) {
           key="cart"
           icon={
             <Badge
-              count={user.auth && user.auth.user.cart.length}
+              count={user.auth && user.auth.cart.length}
               style={{
                 right: 6,
                 minWidth: "16px",

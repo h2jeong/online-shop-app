@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import Title from "antd/lib/typography/Title";
-import { useSelector } from "react-redux";
 import FileUpload from "../../utils/FileUpload";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
@@ -18,7 +17,6 @@ const Continents = [
 ];
 
 function UploadProductPage(props) {
-  const user = useSelector(state => state.user);
   const [TitleValue, setTitleValue] = useState("");
   const [Description, setDescription] = useState("");
   const [Price, setPrice] = useState(0);
@@ -50,7 +48,7 @@ function UploadProductPage(props) {
     }
 
     const variables = {
-      writer: user.auth.user._id,
+      writer: props.user.auth._id,
       title: TitleValue,
       description: Description,
       price: Price,
@@ -66,6 +64,7 @@ function UploadProductPage(props) {
       }
     });
   };
+
   return (
     <div style={{ maxWidth: 700, margin: "2rem auto" }}>
       <div

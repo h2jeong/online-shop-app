@@ -8,9 +8,15 @@ router.get("/auth", auth, (req, res) => {
   // console.log("auth:", req.body, req.user);
   // req에 보내고 온거 확인 후 res에 담을 정보 처리
   res.status(200).json({
-    user: req.user,
+    _id: req.user._id,
     isAdmin: req.user.role === 0 ? false : true,
-    isAuth: true
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    role: req.user.role,
+    image: req.user.image,
+    cart: req.user.cart,
+    history: req.user.history
   });
 });
 
@@ -110,7 +116,7 @@ router.get("/addToCart", auth, (req, res) => {
         { _id: req.user._id, "cart.id": req.query.productId },
         { $inc: { "cart.$.quantity": 1 } },
         { new: true },
-        () => {
+        (err, userInfo) => {
           if (err) return res.json({ success: false, err });
           res.status(200).json(userInfo.cart);
         }

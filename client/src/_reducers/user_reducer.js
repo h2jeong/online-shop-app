@@ -21,12 +21,12 @@ export default function(state = {}, action) {
     case ADD_TO_CART_USER:
       return {
         ...state,
-        cart: action.payload
+        auth: { ...state.auth, cart: action.payload }
       };
     case REMOVE_ITEM_USER:
       return {
         ...state,
-        cart: action.payload.cart,
+        auth: { ...state.auth, cart: action.payload.cart },
         cartDetail: action.payload.cartDetail
       };
     case GET_CART_ITEMS_USER:
