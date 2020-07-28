@@ -1,6 +1,6 @@
 import React from "react";
 
-function HistoryPage() {
+function HistoryPage(props) {
   return (
     <div style={{ width: "80%", margin: "3rem auto" }}>
       <div style={{ textAlign: "center" }}>
@@ -19,12 +19,16 @@ function HistoryPage() {
         </thead>
 
         <tbody>
-          <tr>
-            <td>id</td>
-            <td>price</td>
-            <td>quantity</td>
-            <td>dateOfPurchase</td>
-          </tr>
+          {props.user.auth &&
+            props.user.auth &&
+            props.user.auth.history.map(item => (
+              <tr key={item.id}>
+                <td>{item.paymentId}</td>
+                <td>{item.price}</td>
+                <td>{item.quantity}</td>
+                <td>{item.dateOfPurchase}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

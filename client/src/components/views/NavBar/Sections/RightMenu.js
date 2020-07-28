@@ -9,7 +9,8 @@ import {
   LogoutOutlined,
   PoweroffOutlined,
   UploadOutlined,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
+  ShopOutlined
 } from "@ant-design/icons";
 
 function RightMenu(props) {
@@ -42,6 +43,9 @@ function RightMenu(props) {
   } else {
     return (
       <Menu mode={props.mode}>
+        <Menu.Item key="history" icon={<ShopOutlined />}>
+          <a href="/history">History</a>
+        </Menu.Item>
         <Menu.Item key="upload" icon={<UploadOutlined />}>
           <a href="/product/upload">Upload</a>
         </Menu.Item>

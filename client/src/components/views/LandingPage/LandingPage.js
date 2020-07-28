@@ -83,12 +83,12 @@ function LandingPage() {
   const handlePrice = value => {
     const data = price;
     let array = data.filter(item => item._id === value)[0].array;
-    console.log(array);
+    // console.log(array);
     return array;
   };
 
   const handleFilters = (filters, category) => {
-    console.log(category, filters);
+    // console.log(category, filters);
     const newFilters = { ...Filters };
     newFilters[category] = filters;
 
@@ -103,7 +103,7 @@ function LandingPage() {
 
   const upadateSearchTerms = term => {
     setSearchTerms(term);
-    console.log(term);
+    // console.log(term);
     const variables = {
       skip: 0,
       limit: Limit,
