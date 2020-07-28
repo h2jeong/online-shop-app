@@ -5,7 +5,8 @@ import {
   AUTH_USER,
   ADD_TO_CART_USER,
   GET_CART_ITEMS_USER,
-  REMOVE_ITEM_USER
+  REMOVE_CART_ITEM_USER,
+  ON_SUCCESS_BUY_USER
 } from "./types";
 import axios from "axios";
 import { USER_SERVER } from "../components/Config.js";
@@ -46,9 +47,9 @@ export function addToCart(id) {
   return { type: ADD_TO_CART_USER, payload: request };
 }
 
-export function removeItem(id) {
+export function removeCartItem(id) {
   const request = axios
-    .get(`${USER_SERVER}/removeItem?productId=${id}`)
+    .get(`${USER_SERVER}/removeFromCart?id=${id}`)
     .then(res => {
       res.data.cart.forEach(item => {
         res.data.cartDetail.forEach((product, idx) => {
@@ -60,7 +61,7 @@ export function removeItem(id) {
       return res.data;
     });
 
-  return { type: REMOVE_ITEM_USER, payload: request };
+  return { type: REMOVE_CART_ITEM_USER, payload: request };
 }
 
 export function getCartItems(cartItems, userCart) {
@@ -80,4 +81,8 @@ export function getCartItems(cartItems, userCart) {
       return res.data.product;
     });
   return { type: GET_CART_ITEMS_USER, payload: request };
+}
+
+export function onSuccessBuy(data) {
+  return { type: ON_SUCCESS_BUY_USER, payload: data };
 }

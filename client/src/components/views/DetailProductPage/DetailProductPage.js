@@ -29,9 +29,10 @@ function DetailProductPage(props) {
     if (!props.user.auth.isAuth) {
       return message.warning("Add to Cart is available after login");
     }
-    dispatch(addToCart(productId)).then(res =>
-      props.history.push("/user/cart")
-    );
+    dispatch(addToCart(productId));
+    // .then(res =>
+    //   props.history.push("/user/cart")
+    // );
   };
 
   return (
